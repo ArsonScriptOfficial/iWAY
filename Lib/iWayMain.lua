@@ -51,7 +51,7 @@ local Converted = {
 	["_IY_Handler"] = Instance.new("LocalScript");
 }
 
-function Module:CreateWay(Name)
+Module:CreateWay(Name)
 
 Converted["_InfiniteWay"].ResetOnSpawn = false
 Converted["_InfiniteWay"].Name = "InfiniteWay"
@@ -605,7 +605,6 @@ Converted["_AddNoclip"].Size = UDim2.new(0, 51, 0, 18)
 Converted["_AddNoclip"].ZIndex = 5
 Converted["_AddNoclip"].Name = "AddNoclip"
 Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
-end
 
 -- Fake Module Scripts:
 
@@ -1523,48 +1522,36 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		end
 	end
 	
-
-    local CMDs = CMDs or {}
-    local cmds = cmds or {}
-
-    function Module:AddCmd(Aliases, Description, Func)
-        if not Aliases or not Description or not Func then
-            warn("AddCmd: Aliases, Description, and Func must all be provided.")
-            return
-        end
-
-        Aliases = Aliases:lower()
-
-        local NewCmd = {
-            NAME = string.split(Aliases, "/"),
-            DESC = Description,
-            CmdFunction = Func,
-        }
-
-        CMDs[#CMDs + 1] = NewCmd
-        table.insert(cmds, NewCmd)
-
-        if GUI and GUI.PopupFrame and GUI.PopupFrame.Items and GUI.PopupFrame.Items.CMD then
-            local newcmd = GUI.PopupFrame.Items.CMD:Clone()
-            newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame or warn("cmdsFrame not found")
-            newcmd.Text = Aliases
-            newcmd.MouseButton1Click:Connect(function()
-                notify(Aliases .. ' | ' .. Description)
-            end)
-
-            local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
-            newcmd2.Parent = SUGGESTIONS.Frame or warn("SUGGESTIONS.Frame not found")
-            newcmd2.Text = Aliases
-            newcmd2.MouseButton1Click:Connect(function()
-                notify(Aliases .. ' | ' .. Description)
-            end)
-
-            IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
-            IndexContents('', true, SUGGESTIONS.Frame)
-        else
-            warn("CMD template does not exist or GUI structure is invalid!")
-        end
-    end
+	function Module:AddCmd(Aliases, Description, Func)
+		Aliases = Aliases:lower()
+	
+		local NewCmd = {
+			NAME = string.split(Aliases, "/");
+			DESC = Description;
+			CmdFunction = Func;
+		}
+	
+		CMDs[#CMDs + 1] = NewCmd
+	
+		table.insert(cmds, NewCmd)
+	
+		local newcmd = GUI.PopupFrame.Items.CMD:Clone()
+		newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
+		newcmd.Text = Aliases
+		newcmd.MouseButton1Click:Connect(function()
+			notify(Aliases .. ' | ' .. Description)
+		end)
+	
+		local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
+		newcmd2.Parent = SUGGESTIONS.Frame
+		newcmd2.Text = Aliases
+		newcmd2.MouseButton1Click:Connect(function()
+			notify(Aliases .. ' | ' .. Description)
+		end)
+	
+		IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
+		IndexContents('', true, SUGGESTIONS.Frame)
+	end
 	
 	local function getRoot(char)
 		local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
@@ -1605,7 +1592,7 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		wait(0.5)
 		GUI.PopupFrame:TweenSize(UDim2.new(0,457,0,263), "InOut", "Quart", 0.5, true, nil)
 	end)
-	
+
 	
 	GUI.PopupFrame.Items.settingsFrame.prefixBox.Changed:connect(function(property)
 		if property == "Text" then
