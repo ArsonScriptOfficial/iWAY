@@ -608,11 +608,6 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
 
-
-    local GUI = script.Parent:WaitForChild("Top")
-	local SUGGESTIONS = script.Parent:WaitForChild("Suggestions")
-	local CMDBAR = script.Parent:WaitForChild("Cmdbar")
-	local messageGui = script.Parent:WaitForChild("PersonalHint")
 end
 
 -- Fake Local Scripts:
@@ -646,7 +641,7 @@ local function RNOB_fake_script()
 	local RunService = game:GetService("RunService")
 	local suggestionsEnabled = true
 	local TeleportService = game:GetService("TeleportService")
-    local GUI = script.Parent:WaitForChild("Top")
+    	local GUI = script.Parent:WaitForChild("Top")
 	local SUGGESTIONS = script.Parent:WaitForChild("Suggestions")
 	local CMDBAR = script.Parent:WaitForChild("Cmdbar")
 	local messageGui = script.Parent:WaitForChild("PersonalHint")
