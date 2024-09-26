@@ -607,13 +607,9 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].ZIndex = 5
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
-end
 
 
 local fake_module_scripts = {}
-
-
--- Fake Local Scripts:
 
 local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Handler
     local script = Instance.new("LocalScript")
@@ -627,6 +623,9 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
         end
         return req(obj)
     end
+end
+
+-- Fake Local Scripts:
 
 	local ReplicatedStorage = game:GetService("SoundService")
 	local UserInputService = game:GetService("UserInputService")
