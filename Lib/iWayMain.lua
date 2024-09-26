@@ -607,7 +607,7 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].ZIndex = 5
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
-end
+
 
 
 local fake_module_scripts = {}
@@ -1948,5 +1948,5 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 end
 
 coroutine.wrap(RNOB_fake_script)()
-
+end
 return Module
