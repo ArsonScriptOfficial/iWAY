@@ -607,7 +607,7 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].ZIndex = 5
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
-
+end
 
 
 local fake_module_scripts = {}
@@ -1554,6 +1554,37 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
 		IndexContents('', true, SUGGESTIONS.Frame)
 	end
+
+	function Module:AddCmd(Aliases, Description, Func)
+		Aliases = Aliases:lower()
+	
+		local NewCmd = {
+			NAME = string.split(Aliases, "/");
+			DESC = Description;
+			CmdFunction = Func;
+		}
+	
+		CMDs[#CMDs + 1] = NewCmd
+	
+		table.insert(cmds, NewCmd)
+	
+		local newcmd = GUI.PopupFrame.Items.CMD:Clone()
+		newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
+		newcmd.Text = Aliases
+		newcmd.MouseButton1Click:Connect(function()
+			notify(Aliases .. ' | ' .. Description)
+		end)
+	
+		local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
+		newcmd2.Parent = SUGGESTIONS.Frame
+		newcmd2.Text = Aliases
+		newcmd2.MouseButton1Click:Connect(function()
+			notify(Aliases .. ' | ' .. Description)
+		end)
+	
+		IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
+		IndexContents('', true, SUGGESTIONS.Frame)
+	end
 	
 	local function getRoot(char)
 		local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
@@ -1595,343 +1626,8 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		GUI.PopupFrame:TweenSize(UDim2.new(0,457,0,263), "InOut", "Quart", 0.5, true, nil)
 	end)
 	
-	AddCmd("ws/speed/walkspeed", "Changes you speed", function(args)
-		local character = Speaker.Character or Speaker.CharacterAdded:Wait()
-		local humanoid = character:FindFirstChildOfClass("Humanoid")
 	
-		if not humanoid then
-			notify("Humanoid not found!")
-			return
-		end
-	
-		local speed = tonumber(args[2])
-		if speed then
-			humanoid.WalkSpeed = speed
-		end
-	end)
-	
-	AddCmd("jp/jumppower", "Changes your jump power", function(args)
-		local jpower = args[2] or 50
-		if tonumber(jpower) then
-			if speaker.Character:FindFirstChildOfClass('Humanoid').UseJumpPower then
-				speaker.Character:FindFirstChildOfClass('Humanoid').JumpPower = jpower
-			else
-				speaker.Character:FindFirstChildOfClass('Humanoid').JumpHeight  = jpower
-			end
-		end
-	end)
-	
-	local danceTrack = nil
-	
-	AddCmd("dance", "Dance!", function(args)
-		pcall(ExecCmd, "undance")
-		local dances = {"27789359", "30196114", "248263260", "45834924", "33796059", "28488254", "52155728"}
-		if r15(speaker) then
-			dances = {"3333432454", "4555808220", "4049037604", "4555782893", "10214311282", "10714010337", "10713981723", "10714372526", "10714076981", "10714392151", "11444443576"}
-		end
-		local animation = Instance.new("Animation")
-		animation.Name = "IWAnimDance"
-		animation.AnimationId = "rbxassetid://" .. dances[math.random(1, #dances)]
-		danceTrack = speaker.Character:FindFirstChildWhichIsA("Humanoid"):LoadAnimation(animation)
-		danceTrack.Looped = true
-		danceTrack:Play()
-	end)
-	
-	AddCmd("undance", "Stop dancing", function(args)
-		if danceTrack then
-			danceTrack:Stop()
-			danceTrack:Destroy()
-			danceTrack = nil
-		end
-	end)
-	
-	flinging = false
-	AddCmd("fling", "Fling someone with a simple walk", function(args)
-		flinging = false
-		for _, child in pairs(speaker.Character:GetDescendants()) do
-			if child:IsA("BasePart") then
-				child.CustomPhysicalProperties = PhysicalProperties.new(math.huge, 0.3, 0.5)
-			end
-		end
-		ExecCmd('noclip')
-		wait(.1)
-		local bambam = Instance.new("BodyAngularVelocity")
-		bambam.Name = randomString()
-		bambam.Parent = getRoot(speaker.Character)
-		bambam.AngularVelocity = Vector3.new(0,99999,0)
-		bambam.MaxTorque = Vector3.new(0,math.huge,0)
-		bambam.P = math.huge
-		local Char = speaker.Character:GetChildren()
-		for i, v in next, Char do
-			if v:IsA("BasePart") then
-				v.CanCollide = false
-				v.Massless = true
-				v.Velocity = Vector3.new(0, 0, 0)
-			end
-		end
-		flinging = true
-		local function flingDiedF()
-			execCmd('unfling')
-		end
-		flingDied = speaker.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
-		repeat
-			bambam.AngularVelocity = Vector3.new(0,99999,0)
-			wait(.2)
-			bambam.AngularVelocity = Vector3.new(0,0,0)
-			wait(.1)
-		until flinging == false
-	end)
-	
-	AddCmd("unfling/nofling", "Stop the flings", function(args)
-		execCmd('clip')
-		if flingDied then
-			flingDied:Disconnect()
-		end
-		flinging = false
-		wait(.1)
-		local speakerChar = speaker.Character
-		if not speakerChar or not getRoot(speakerChar) then return end
-		for i,v in pairs(getRoot(speakerChar):GetChildren()) do
-			if v.ClassName == 'BodyAngularVelocity' then
-				v:Destroy()
-			end
-		end
-		for _, child in pairs(speakerChar:GetDescendants()) do
-			if child.ClassName == "Part" or child.ClassName == "MeshPart" then
-				child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
-			end
-		end
-	end)
-	
-	local bangLoop
-	local bangDied
-	local bang
-	local bangAnim
-	
-	AddCmd("bang/rape", "Ayo brutherrr! Anyways you can annoy someone with this", function(args)
-		ExecCmd("unbang")
-		wait()
-		local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-		bangAnim = Instance.new("Animation")
-		bangAnim.AnimationId = not r15(speaker) and "rbxassetid://148840371" or "rbxassetid://5918726674"
-		bang = humanoid:LoadAnimation(bangAnim)
-		bang:Play(0.1, 1, 1)
-		bang:AdjustSpeed(args[3] or 3)
-		bangDied = humanoid.Died:Connect(function()
-			bang:Stop()
-			bangAnim:Destroy()
-			bangDied:Destroy()
-			bangLoop:Destroy()
-		end)
-		if args[2] then
-			local players = getPlayer(args[2], speaker)
-			for _, v in pairs(players) do
-				local bangplr = Players[v].Name
-				local bangOffet = CFrame.new(0, 0, 1.1)
-				bangLoop = RunService.Stepped:Connect(function()
-					pcall(function()
-						local otherRoot = getTorso(Players[bangplr].Character)
-						getRoot(speaker.Character).CFrame = otherRoot.CFrame * bangOffet
-					end)
-				end)
-			end
-		end
-	end)
-	
-	AddCmd("unbang/unrape", "Stop doing the sin", function(args)
-		if bangDied then
-			bang:Stop()
-			bangAnim:Destroy()
-			bangDied:Destroy()
-			bangLoop:Destroy()
-		end
-	end)
-	
-	
-	local Noclipping = nil
-	AddCmd("noclip", "Walk through objects", function(args)
-		Clip = false
-		wait(0.1)
-		local function NoclipLoop()
-			if Clip == false and speaker.Character ~= nil then
-				for _, child in pairs(speaker.Character:GetDescendants()) do
-					if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
-						child.CanCollide = false
-					end
-				end
-			end
-		end
-		Noclipping = RunService.Stepped:Connect(NoclipLoop)
-	end)
-	
-	AddCmd("clip/unnoclip", "Stop noclipping", function(args)
-		if Noclipping then
-			Noclipping:Disconnect()
-		end
-		Clip = true
-	end)
-	
-	
-	swimming = false
-	local oldgrav = workspace.Gravity
-	local swimbeat = nil
-	AddCmd("swim", "Swim everywhere", function(args)
-		if not swimming and speaker and speaker.Character and speaker.Character:FindFirstChildWhichIsA("Humanoid") then
-			oldgrav = workspace.Gravity
-			workspace.Gravity = 0
-			local swimDied = function()
-				workspace.Gravity = oldgrav
-				swimming = false
-			end
-			local Humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-			gravReset = Humanoid.Died:Connect(swimDied)
-			local enums = Enum.HumanoidStateType:GetEnumItems()
-			table.remove(enums, table.find(enums, Enum.HumanoidStateType.None))
-			for i, v in pairs(enums) do
-				Humanoid:SetStateEnabled(v, false)
-			end
-			Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
-			swimbeat = RunService.Heartbeat:Connect(function()
-				pcall(function()
-					speaker.Character.HumanoidRootPart.Velocity = ((Humanoid.MoveDirection ~= Vector3.new() or UserInputService:IsKeyDown(Enum.KeyCode.Space)) and speaker.Character.HumanoidRootPart.Velocity or Vector3.new())
-				end)
-			end)
-			swimming = true
-		end
-	end)
-	
-	AddCmd("unswim/noswim", "Disable swim", function(args)
-		if speaker and speaker.Character and speaker.Character:FindFirstChildWhichIsA("Humanoid") then
-			workspace.Gravity = oldgrav
-			swimming = false
-			if gravReset then
-				gravReset:Disconnect()
-			end
-			if swimbeat ~= nil then
-				swimbeat:Disconnect()
-				swimbeat = nil
-			end
-			local Humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-			local enums = Enum.HumanoidStateType:GetEnumItems()
-			table.remove(enums, table.find(enums, Enum.HumanoidStateType.None))
-			for i, v in pairs(enums) do
-				Humanoid:SetStateEnabled(v, true)
-			end
-		end
-	end)
-	
-	AddCmd("breakvelocity", "Sets your velocity to 0", function(args)
-		local BeenASecond, V3 = false, Vector3.new(0, 0, 0)
-		delay(1, function()
-			BeenASecond = true
-		end)
-		while not BeenASecond do
-			for _, v in ipairs(speaker.Character:GetDescendants()) do
-				if v:IsA("BasePart") then
-					v.Velocity, v.RotVelocity = V3, V3
-				end
-			end
-			wait()
-		end
-	end)
-	
-	local tweenSpeed = 1
-	AddCmd("tspeed/tweenspeed", "Changes your tween seed", function(args)
-	
-		local newSpeed = args[2] or 1
-		if tonumber(newSpeed) then
-			tweenSpeed = tonumber(newSpeed)
-		end
-	end)
-	
-	AddCmd("to/goto", "Teleport to a player", function(args)
-		local players = getPlayer(args[2], speaker)
-		for i,v in pairs(players)do
-			if Players[v].Character ~= nil then
-				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
-					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
-					wait(.1)
-				end
-				getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3,1,0)
-			end
-		end
-		ExecCmd('breakvelocity')
-	end)
-	
-	AddCmd("tto/tgoto/tweento/tweengoto", "Tween teleport to a player", function(args)
-		local players = getPlayer(args[2], speaker)
-		for i,v in pairs(players)do
-			if Players[v].Character ~= nil then
-				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
-					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
-					wait(.1)
-				end
-				TweenService:Create(
-					getRoot(speaker.Character),
-					TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear),
-					{CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3, 1, 0)}
-				):Play()
-			end
-		end
-		ExecCmd('breakvelocity')
-	end)
-	
-	local walkto = false
-	local waypointwalkto = false
-	AddCmd("walkto/follow", "Walk to a player", function(args)
-		local players = getPlayer(args[2], speaker)
-		for i,v in pairs(players)do
-			if Players[v].Character ~= nil then
-				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
-					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
-					wait(.1)
-				end
-				walkto = true
-				repeat wait()
-					speaker.Character:FindFirstChildOfClass('Humanoid'):MoveTo(getRoot(Players[v].Character).Position)
-				until Players[v].Character == nil or not getRoot(Players[v].Character) or walkto == false
-			end
-		end
-	end)
-	
-	AddCmd("unwalkto/nowalkto/unfollow/nofllow", "Stop walk to a player", function(args)
-		walkto = false
-		waypointwalkto = false
-	end)
-	
-	AddCmd("hop/shop/serverhop", "Switch servers", function(args)
-		local servers = game.HttpService:JSONDecode(game:HttpGet(
-			"https://games.roblox.com/v1/games/112420803/servers/Public?sortOrder=Asc&limit=100"))
-		for i, v in pairs(servers.data) do
-			if v.playing == nil then
-				notify("Error")
-				break
-			end
-			if v.playing ~= v.maxPlayers and v.id ~= game.JobId and v.playing ~= nil then
-				notify("Switching to a server with " .. v.playing .. " Players...")
-				task.wait(0.9)
-				game:GetService("TeleportService"):TeleportToPlaceInstance(
-				game.PlaceId, v.id)
-				task.wait(0.1)
-				break
-			end
-		end
-	end)
-	
-	AddCmd("rj/rej/rejoin", "Rejoin the current server", function(args)
-		if #Players:GetPlayers() <= 1 then
-			Players.LocalPlayer:Kick("\nRejoining...")
-			wait()
-			TeleportService:Teleport(PlaceId, Players.LocalPlayer)
-		else
-			TeleportService:TeleportToPlaceInstance(PlaceId, JobId, Players.LocalPlayer)
-		end
-	end)
-
-    AddCmd("dex/dexsolara/explorer", "Opens a dex explorer fixed for Solara", function(args)
-	    notify("Loading Script, this may take a second")
-    	loadstring(game:HttpGet("https://raw.githubusercontent.com/HummingBird8/HummingRn/main/OptimizedDexForSolara.lua"))()
-    end)
+    
 	
 	GUI.PopupFrame.Items.settingsFrame.prefixBox.Changed:connect(function(property)
 		if property == "Text" then
@@ -1948,5 +1644,5 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 end
 
 coroutine.wrap(RNOB_fake_script)()
-end
+
 return Module
