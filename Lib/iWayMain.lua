@@ -1,6 +1,6 @@
 local Module = {}
 
-local function Module:CreateWay(Name)
+function Module:CreateWay(Name)
 	local Converted = {
 		["_InfiniteWay"] = Instance.new("ScreenGui");
 		["_Top"] = Instance.new("Frame");
@@ -1523,7 +1523,7 @@ local function Module:CreateWay(Name)
 			end
 		end
 	end
-	  local function Module:AddCmd(Aliases, Description, Func)
+	  function Module:AddCmd(Aliases, Description, Func)
 			Aliases = Aliases:lower()
 		
 			local NewCmd = {
