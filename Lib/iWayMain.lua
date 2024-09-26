@@ -1605,7 +1605,6 @@ end
 			ExecCmd(script.Parent.Cmdbar.Text)
 		end
 	end)
-end
 
 coroutine.wrap(RNOB_fake_script)()
 
