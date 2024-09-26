@@ -609,22 +609,6 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
 end
 
-
-local fake_module_scripts = {}
-
-local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Handler
-    local script = Instance.new("LocalScript")
-    script.Name = "IY_Handler"
-    script.Parent = Converted["_InfiniteWay"]
-    local req = require
-    local require = function(obj)
-        local fake = fake_module_scripts[obj]
-        if fake then
-            return fake()
-        end
-        return req(obj)
-    end
-
 -- Fake Local Scripts:
 
 	local ReplicatedStorage = game:GetService("SoundService")
@@ -1442,7 +1426,7 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 			end
 		end)
 	else
-		warn('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
+		print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
 	end
 	
 	Players.LocalPlayer.Chatted:connect(function(message)
@@ -1523,7 +1507,6 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		end
 	end
 
-
     local function AddCmd(Aliases, Description, Func)
         if not Aliases or not Description or not Func then
             warn("AddCmd: Aliases, Description, and Func must all be provided.")
@@ -1562,46 +1545,11 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
             warn("CMD template does not exist!")
         end
     end
-    
-    function Module:AddCmd(Aliases, Description, Func)
-        if not Aliases or not Description or not Func then
-            warn("AddCmd: Aliases, Description, and Func must all be provided.")
-            return
-        end
-    
-        Aliases = Aliases:lower()
-    
-        local NewCmd = {
-            NAME = string_split(Aliases, "/"),
-            DESC = Description,
-            CmdFunction = Func,
-        }
-    
-        CMDs[#CMDs + 1] = NewCmd
-        table.insert(cmds, NewCmd)
-    
-        if GUI.PopupFrame.Items.CMD then
-            local newcmd = GUI.PopupFrame.Items.CMD:Clone()
-            newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
-            newcmd.Text = Aliases
-            newcmd.MouseButton1Click:Connect(function()
-                notify(Aliases .. ' | ' .. Description)
-            end)
-    
-            local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
-            newcmd2.Parent = SUGGESTIONS.Frame
-            newcmd2.Text = Aliases
-            newcmd2.MouseButton1Click:Connect(function()
-                notify(Aliases .. ' | ' .. Description)
-            end)
-    
-            IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
-            IndexContents('', true, SUGGESTIONS.Frame)
-        else
-            warn("CMD template does not exist!")
-        end
-    end
-
+	
+	function Module:AddCmd(Aliases, Description, Func)
+	    AddCmd(Aliases, Description, Func)
+	end
+	
 	local function getRoot(char)
 		local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
 		return rootPart
