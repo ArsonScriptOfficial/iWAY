@@ -1,6 +1,6 @@
 local Module = {}
 
-local function Module:CreateWay()
+local function Module:CreateWay(Name)
 	local Converted = {
 		["_InfiniteWay"] = Instance.new("ScreenGui");
 		["_Top"] = Instance.new("Frame");
@@ -353,7 +353,7 @@ local function Module:CreateWay()
 	Converted["_logs"].Parent = Converted["_Select"]
 	
 	Converted["_Title"].Font = Enum.Font.SourceSans
-	Converted["_Title"].Text = "Infinite Way [FE]"
+	Converted["_Title"].Text = "Infinite Way [FE] - "..Name
 	Converted["_Title"].TextColor3 = Color3.fromRGB(255, 255, 255)
 	Converted["_Title"].TextSize = 14
 	Converted["_Title"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1522,7 +1522,7 @@ local function Module:CreateWay()
 				ExecCmd(str)
 			end
 		end
-	
+	end
 	  local function Module:AddCmd(Aliases, Description, Func)
 			Aliases = Aliases:lower()
 		
@@ -1641,5 +1641,5 @@ local function Module:CreateWay()
 		end)
 	end
 	coroutine.wrap(RNOB_fake_script)()
-end
+	
 return Module
