@@ -1639,5 +1639,6 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		end
 	end)
 end
-return Module
+
 coroutine.wrap(RNOB_fake_script)()
+return Module
