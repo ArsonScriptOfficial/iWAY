@@ -1,12 +1,5 @@
 local Module = {}
 
-workspace.CurrentRooms["69"].Assets:GetChildren()[81].Lockpick
-AmbushMoving
-
--- Generated using RoadToGlory's Converter v1.1 (RoadToGlory#9879)
-
--- Instances:
-
 local Converted = {
 	["_InfiniteWay"] = Instance.new("ScreenGui");
 	["_Top"] = Instance.new("Frame");
