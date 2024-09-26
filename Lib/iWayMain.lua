@@ -612,10 +612,11 @@ end
 
 local fake_module_scripts = {}
 
-local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Handler
+local function RNOB_fake_script()
     local script = Instance.new("LocalScript")
     script.Name = "IY_Handler"
     script.Parent = Converted["_InfiniteWay"]
+
     local req = require
     local require = function(obj)
         local fake = fake_module_scripts[obj]
@@ -624,6 +625,7 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
         end
         return req(obj)
     end
+
 
 -- Fake Local Scripts:
 
@@ -1583,7 +1585,6 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		end
 	end)
 end
-
 coroutine.wrap(RNOB_fake_script)()
 
 return Module
