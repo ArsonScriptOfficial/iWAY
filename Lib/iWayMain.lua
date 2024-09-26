@@ -607,7 +607,7 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].ZIndex = 5
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
-
+end
 
 
 local fake_module_scripts = {}
@@ -1524,66 +1524,8 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		end
 	end
 	
-	local function AddCmd(Aliases, Description, Func)
-		Aliases = Aliases:lower()
-	
-		local NewCmd = {
-			NAME = string.split(Aliases, "/");
-			DESC = Description;
-			CmdFunction = Func;
-		}
-	
-		CMDs[#CMDs + 1] = NewCmd
-	
-		table.insert(cmds, NewCmd)
-	
-		local newcmd = GUI.PopupFrame.Items.CMD:Clone()
-		newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
-		newcmd.Text = Aliases
-		newcmd.MouseButton1Click:Connect(function()
-			notify(Aliases .. ' | ' .. Description)
-		end)
-	
-		local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
-		newcmd2.Parent = SUGGESTIONS.Frame
-		newcmd2.Text = Aliases
-		newcmd2.MouseButton1Click:Connect(function()
-			notify(Aliases .. ' | ' .. Description)
-		end)
-	
-		IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
-		IndexContents('', true, SUGGESTIONS.Frame)
-	end
-
 	function Module:AddCmd(Aliases, Description, Func)
-		Aliases = Aliases:lower()
-	
-		local NewCmd = {
-			NAME = string.split(Aliases, "/");
-			DESC = Description;
-			CmdFunction = Func;
-		}
-	
-		CMDs[#CMDs + 1] = NewCmd
-	
-		table.insert(cmds, NewCmd)
-	
-		local newcmd = GUI.PopupFrame.Items.CMD:Clone()
-		newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
-		newcmd.Text = Aliases
-		newcmd.MouseButton1Click:Connect(function()
-			notify(Aliases .. ' | ' .. Description)
-		end)
-	
-		local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
-		newcmd2.Parent = SUGGESTIONS.Frame
-		newcmd2.Text = Aliases
-		newcmd2.MouseButton1Click:Connect(function()
-			notify(Aliases .. ' | ' .. Description)
-		end)
-	
-		IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
-		IndexContents('', true, SUGGESTIONS.Frame)
+	    AddCmd(Aliases, Description, Func)
 	end
 	
 	local function getRoot(char)
@@ -1644,5 +1586,5 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 end
 
 coroutine.wrap(RNOB_fake_script)()
-end
+
 return Module
