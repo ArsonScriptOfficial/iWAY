@@ -1,57 +1,57 @@
 local Module = {}
 
+local Converted = {
+    ["_InfiniteWay"] = Instance.new("ScreenGui");
+    ["_Top"] = Instance.new("Frame");
+    ["_PopupFrame"] = Instance.new("Frame");
+    ["_Items"] = Instance.new("Frame");
+    ["_cmdsFrame"] = Instance.new("ScrollingFrame");
+    ["_settingsFrame"] = Instance.new("ScrollingFrame");
+    ["_prefixText"] = Instance.new("TextButton");
+    ["_prefixBox"] = Instance.new("TextBox");
+    ["_suggestionsText"] = Instance.new("TextButton");
+    ["_suggestionsBox"] = Instance.new("ImageButton");
+    ["_Search"] = Instance.new("Frame");
+    ["_ImageLabel"] = Instance.new("ImageLabel");
+    ["_TextBox"] = Instance.new("TextBox");
+    ["_Script"] = Instance.new("Script");
+    ["_logsFrame"] = Instance.new("ScrollingFrame");
+    ["_CMD"] = Instance.new("TextButton");
+    ["_Label"] = Instance.new("ScrollingFrame");
+    ["_labelText"] = Instance.new("TextButton");
+    ["_closeBox"] = Instance.new("ImageButton");
+    ["_Close"] = Instance.new("ImageButton");
+    ["_Minimize"] = Instance.new("ImageButton");
+    ["_Select"] = Instance.new("Frame");
+    ["_cmds"] = Instance.new("TextButton");
+    ["_settings"] = Instance.new("TextButton");
+    ["_highlight"] = Instance.new("TextButton");
+    ["_logs"] = Instance.new("TextButton");
+    ["_Title"] = Instance.new("TextLabel");
+    ["_Cmdbar"] = Instance.new("TextBox");
+    ["_Suggestions"] = Instance.new("Frame");
+    ["_Frame"] = Instance.new("ScrollingFrame");
+    ["_Title1"] = Instance.new("TextLabel");
+    ["_PersonalHint"] = Instance.new("Frame");
+    ["_Message"] = Instance.new("TextButton");
+    ["_KeybindsEditor"] = Instance.new("Frame");
+    ["_Minimize1"] = Instance.new("ImageButton");
+    ["_Close1"] = Instance.new("ImageButton");
+    ["_Title2"] = Instance.new("TextLabel");
+    ["_Frame1"] = Instance.new("Frame");
+    ["_CTB"] = Instance.new("TextButton");
+    ["_Desc"] = Instance.new("TextLabel");
+    ["_Line"] = Instance.new("Frame");
+    ["_keybindCmd"] = Instance.new("TextBox");
+    ["_AddCmd"] = Instance.new("TextButton");
+    ["_AddFly"] = Instance.new("TextButton");
+    ["_FlyText"] = Instance.new("TextLabel");
+    ["_NoclipText"] = Instance.new("TextLabel");
+    ["_AddNoclip"] = Instance.new("TextButton");
+    ["_IY_Handler"] = Instance.new("LocalScript");
+}
+
 function Module:CreateWay(Name)
-        
-    local Converted = {
-    	["_InfiniteWay"] = Instance.new("ScreenGui");
-    	["_Top"] = Instance.new("Frame");
-    	["_PopupFrame"] = Instance.new("Frame");
-    	["_Items"] = Instance.new("Frame");
-    	["_cmdsFrame"] = Instance.new("ScrollingFrame");
-    	["_settingsFrame"] = Instance.new("ScrollingFrame");
-    	["_prefixText"] = Instance.new("TextButton");
-    	["_prefixBox"] = Instance.new("TextBox");
-    	["_suggestionsText"] = Instance.new("TextButton");
-    	["_suggestionsBox"] = Instance.new("ImageButton");
-    	["_Search"] = Instance.new("Frame");
-    	["_ImageLabel"] = Instance.new("ImageLabel");
-    	["_TextBox"] = Instance.new("TextBox");
-    	["_Script"] = Instance.new("Script");
-    	["_logsFrame"] = Instance.new("ScrollingFrame");
-    	["_CMD"] = Instance.new("TextButton");
-    	["_Label"] = Instance.new("ScrollingFrame");
-    	["_labelText"] = Instance.new("TextButton");
-    	["_closeBox"] = Instance.new("ImageButton");
-    	["_Close"] = Instance.new("ImageButton");
-    	["_Minimize"] = Instance.new("ImageButton");
-    	["_Select"] = Instance.new("Frame");
-    	["_cmds"] = Instance.new("TextButton");
-    	["_settings"] = Instance.new("TextButton");
-    	["_highlight"] = Instance.new("TextButton");
-    	["_logs"] = Instance.new("TextButton");
-    	["_Title"] = Instance.new("TextLabel");
-    	["_Cmdbar"] = Instance.new("TextBox");
-    	["_Suggestions"] = Instance.new("Frame");
-    	["_Frame"] = Instance.new("ScrollingFrame");
-    	["_Title1"] = Instance.new("TextLabel");
-    	["_PersonalHint"] = Instance.new("Frame");
-    	["_Message"] = Instance.new("TextButton");
-    	["_KeybindsEditor"] = Instance.new("Frame");
-    	["_Minimize1"] = Instance.new("ImageButton");
-    	["_Close1"] = Instance.new("ImageButton");
-    	["_Title2"] = Instance.new("TextLabel");
-    	["_Frame1"] = Instance.new("Frame");
-    	["_CTB"] = Instance.new("TextButton");
-    	["_Desc"] = Instance.new("TextLabel");
-    	["_Line"] = Instance.new("Frame");
-    	["_keybindCmd"] = Instance.new("TextBox");
-    	["_AddCmd"] = Instance.new("TextButton");
-    	["_AddFly"] = Instance.new("TextButton");
-    	["_FlyText"] = Instance.new("TextLabel");
-    	["_NoclipText"] = Instance.new("TextLabel");
-    	["_AddNoclip"] = Instance.new("TextButton");
-    	["_IY_Handler"] = Instance.new("LocalScript");
-    }
     
     -- Properties:
     
@@ -607,6 +607,7 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].ZIndex = 5
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
+end
 
 
 local fake_module_scripts = {}
@@ -623,7 +624,6 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
         end
         return req(obj)
     end
-end
 
 -- Fake Local Scripts:
 
