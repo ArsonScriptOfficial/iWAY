@@ -607,6 +607,12 @@ function Module:CreateWay(Name)
     Converted["_AddNoclip"].ZIndex = 5
     Converted["_AddNoclip"].Name = "AddNoclip"
     Converted["_AddNoclip"].Parent = Converted["_KeybindsEditor"]
+
+
+    local GUI = script.Parent:WaitForChild("Top")
+	local SUGGESTIONS = script.Parent:WaitForChild("Suggestions")
+	local CMDBAR = script.Parent:WaitForChild("Cmdbar")
+	local messageGui = script.Parent:WaitForChild("PersonalHint")
 end
 
 -- Fake Local Scripts:
@@ -615,10 +621,6 @@ end
 	local UserInputService = game:GetService("UserInputService")
 	local Players = game:GetService("Players")
 	local IYMouse = Players.LocalPlayer:GetMouse()
-	local GUI = script.Parent:WaitForChild("Top")
-	local SUGGESTIONS = script.Parent:WaitForChild("Suggestions")
-	local CMDBAR = script.Parent:WaitForChild("Cmdbar")
-	local messageGui = script.Parent:WaitForChild("PersonalHint")
 	local RunService = game:GetService("RunService")
 	local suggestionsEnabled = true
 	local TeleportService = game:GetService("TeleportService")
