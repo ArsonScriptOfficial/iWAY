@@ -1601,7 +1601,7 @@ local function RNOB_fake_script()
 	
 	
 	
-	Moduel:AddCmd("cmds/commands", "Display list of commands", function(args)
+	Module:AddCmd("cmds/commands", "Display list of commands", function(args)
 		minimized = false
 		GUI.Visible = true
 		GUI.PopupFrame:TweenSize(UDim2.new(0,457,0,18), "InOut", "Quart", 0.5, true, nil)
