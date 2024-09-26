@@ -1442,7 +1442,7 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 			end
 		end)
 	else
-		print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
+		warn('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
 	end
 	
 	Players.LocalPlayer.Chatted:connect(function(message)
@@ -1525,40 +1525,83 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 
 
     local function AddCmd(Aliases, Description, Func)
-		Aliases = Aliases:lower()
-	
-		local NewCmd = {
-			NAME = string.split(Aliases, "/");
-			DESC = Description;
-			CmdFunction = Func;
-		}
-	
-		CMDs[#CMDs + 1] = NewCmd
-	
-		table.insert(cmds, NewCmd)
-	
-		local newcmd = GUI.PopupFrame.Items.CMD:Clone()
-		newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
-		newcmd.Text = Aliases
-		newcmd.MouseButton1Click:Connect(function()
-			notify(Aliases .. ' | ' .. Description)
-		end)
-	
-		local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
-		newcmd2.Parent = SUGGESTIONS.Frame
-		newcmd2.Text = Aliases
-		newcmd2.MouseButton1Click:Connect(function()
-			notify(Aliases .. ' | ' .. Description)
-		end)
-	
-		IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
-		IndexContents('', true, SUGGESTIONS.Frame)
-	end
-	
-	function Module:AddCmd(Aliases, Description, Func)
-	    AddCmd(Aliases, Description, Func)
-	end
-	
+        if not Aliases or not Description or not Func then
+            warn("AddCmd: Aliases, Description, and Func must all be provided.")
+            return
+        end
+    
+        Aliases = Aliases:lower()
+    
+        local NewCmd = {
+            NAME = string_split(Aliases, "/"),
+            DESC = Description,
+            CmdFunction = Func,
+        }
+    
+        CMDs[#CMDs + 1] = NewCmd
+        table.insert(cmds, NewCmd)
+    
+        if GUI.PopupFrame.Items.CMD then
+            local newcmd = GUI.PopupFrame.Items.CMD:Clone()
+            newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
+            newcmd.Text = Aliases
+            newcmd.MouseButton1Click:Connect(function()
+                notify(Aliases .. ' | ' .. Description)
+            end)
+    
+            local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
+            newcmd2.Parent = SUGGESTIONS.Frame
+            newcmd2.Text = Aliases
+            newcmd2.MouseButton1Click:Connect(function()
+                notify(Aliases .. ' | ' .. Description)
+            end)
+    
+            IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
+            IndexContents('', true, SUGGESTIONS.Frame)
+        else
+            warn("CMD template does not exist!")
+        end
+    end
+    
+    function Module:AddCmd(Aliases, Description, Func)
+        if not Aliases or not Description or not Func then
+            warn("AddCmd: Aliases, Description, and Func must all be provided.")
+            return
+        end
+    
+        Aliases = Aliases:lower()
+    
+        local NewCmd = {
+            NAME = string_split(Aliases, "/"),
+            DESC = Description,
+            CmdFunction = Func,
+        }
+    
+        CMDs[#CMDs + 1] = NewCmd
+        table.insert(cmds, NewCmd)
+    
+        if GUI.PopupFrame.Items.CMD then
+            local newcmd = GUI.PopupFrame.Items.CMD:Clone()
+            newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
+            newcmd.Text = Aliases
+            newcmd.MouseButton1Click:Connect(function()
+                notify(Aliases .. ' | ' .. Description)
+            end)
+    
+            local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
+            newcmd2.Parent = SUGGESTIONS.Frame
+            newcmd2.Text = Aliases
+            newcmd2.MouseButton1Click:Connect(function()
+                notify(Aliases .. ' | ' .. Description)
+            end)
+    
+            IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
+            IndexContents('', true, SUGGESTIONS.Frame)
+        else
+            warn("CMD template does not exist!")
+        end
+    end
+
 	local function getRoot(char)
 		local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
 		return rootPart
@@ -1573,7 +1616,7 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 		return table.concat(array)
 	end
 	
-	local function getPlayersByName(Name)
+	function getPlayersByName(Name)
 		local Name, Len, Found = string.lower(Name), #Name, {}
 		for _, v in pairs(Players:GetPlayers()) do
 			if Name:sub(0, 1) == '@' then
