@@ -617,6 +617,28 @@ end
 
 -- Fake Local Scripts:
 
+local fake_module_scripts = {}
+
+local function RNOB_fake_script()
+    local script = Instance.new("LocalScript")
+    script.Name = "IY_Handler"
+    script.Parent = Converted["_InfiniteWay"]
+
+    local req = require
+    local require = function(obj)
+        print("Requiring module: ", obj)
+        local fake = fake_module_scripts[obj]
+        if fake then
+            return fake()
+        end
+        local success, result = pcall(req, obj)
+        if not success then
+            warn("Failed to require: " .. tostring(obj) .. " - Error: " .. tostring(result))
+        end
+        return result
+    end
+
+
 	local ReplicatedStorage = game:GetService("SoundService")
 	local UserInputService = game:GetService("UserInputService")
 	local Players = game:GetService("Players")
@@ -1609,5 +1631,6 @@ end
 	end)
 
 coroutine.wrap(RNOB_fake_script)()
+end
 
 return Module
