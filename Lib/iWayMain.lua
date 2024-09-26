@@ -641,7 +641,7 @@ local function RNOB_fake_script()
 	local RunService = game:GetService("RunService")
 	local suggestionsEnabled = true
 	local TeleportService = game:GetService("TeleportService")
-    local GUI = script.Parent:WaitForChild("Top")
+    	local GUI = script.Parent:WaitForChild("Top")
 	local SUGGESTIONS = script.Parent:WaitForChild("Suggestions")
 	local CMDBAR = script.Parent:WaitForChild("Cmdbar")
 	local messageGui = script.Parent:WaitForChild("PersonalHint")
@@ -1530,7 +1530,7 @@ local function RNOB_fake_script()
 		end
 	end
 
-    local function AddCmd(Aliases, Description, Func)
+    function Module:AddCmd(Aliases, Description, Func)
         if not Aliases or not Description or not Func then
             warn("AddCmd: Aliases, Description, and Func must all be provided.")
             return
@@ -1569,46 +1569,6 @@ local function RNOB_fake_script()
         end
     end
 	
-	function Module:AddCmd(Aliases, Description, Func)
-	    if not Aliases or not Description or not Func then
-            warn("AddCmd: Aliases, Description, and Func must all be provided.")
-            return
-        end
-    
-        Aliases = Aliases:lower()
-    
-        local NewCmd = {
-            NAME = string_split(Aliases, "/"),
-            DESC = Description,
-            CmdFunction = Func,
-        }
-    
-        CMDs[#CMDs + 1] = NewCmd
-        table.insert(cmds, NewCmd)
-    
-        if GUI.PopupFrame.Items.CMD then
-            local newcmd = GUI.PopupFrame.Items.CMD:Clone()
-            newcmd.Parent = GUI.PopupFrame.Items.cmdsFrame
-            newcmd.Text = Aliases
-            newcmd.MouseButton1Click:Connect(function()
-                notify(Aliases .. ' | ' .. Description)
-            end)
-    
-            local newcmd2 = GUI.PopupFrame.Items.CMD:Clone()
-            newcmd2.Parent = SUGGESTIONS.Frame
-            newcmd2.Text = Aliases
-            newcmd2.MouseButton1Click:Connect(function()
-                notify(Aliases .. ' | ' .. Description)
-            end)
-    
-            IndexContents('', true, GUI.PopupFrame.Items.cmdsFrame)
-            IndexContents('', true, SUGGESTIONS.Frame)
-        else
-            warn("CMD template does not exist!")
-        end
-    end
-	
-	
 	local function getRoot(char)
 		local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
 		return rootPart
@@ -1641,7 +1601,7 @@ local function RNOB_fake_script()
 	
 	
 	
-	AddCmd("cmds/commands", "Display list of commands", function(args)
+	Moduel:AddCmd("cmds/commands", "Display list of commands", function(args)
 		minimized = false
 		GUI.Visible = true
 		GUI.PopupFrame:TweenSize(UDim2.new(0,457,0,18), "InOut", "Quart", 0.5, true, nil)
