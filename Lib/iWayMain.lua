@@ -51,7 +51,7 @@ local Converted = {
 	["_IY_Handler"] = Instance.new("LocalScript");
 }
 
-function Module:CreateWay(Name)
+Module:CreateWay(Name)
 
 Converted["_InfiniteWay"].ResetOnSpawn = false
 Converted["_InfiniteWay"].Name = "InfiniteWay"
@@ -1609,5 +1609,6 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
 end
 
 coroutine.wrap(RNOB_fake_script)()
+end
 
 return Module
