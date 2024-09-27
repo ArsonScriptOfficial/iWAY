@@ -5,11 +5,11 @@ function Module:Pr(...)
 end
 
 function Module:Wr(...)
-  print(...)
+  warn(...)
 end
 
 function Module:Er(...)
-  print(...)
+  error(...)
 end
 
 return Module
