@@ -51,7 +51,7 @@ local Converted = {
 	["_IY_Handler"] = Instance.new("LocalScript");
 }
 
-Module:CreateWay(Name)
+function Module:CreateWay(Name)
 
 Converted["_InfiniteWay"].ResetOnSpawn = false
 Converted["_InfiniteWay"].Name = "InfiniteWay"
