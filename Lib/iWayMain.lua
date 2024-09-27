@@ -1,3 +1,5 @@
+local Module = {}
+
 local Converted = {
     ["_InfiniteWay"] = Instance.new("ScreenGui"),
     ["_Top"] = Instance.new("Frame"),
@@ -1691,7 +1693,7 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
             ExecCmd(str)
         end
     end
-    local Module = {}
+    
     function Module:AddCmd(Aliases, Description, Func)
         Aliases = Aliases:lower()
 
@@ -1790,5 +1792,5 @@ local function RNOB_fake_script() -- Fake Script: StarterGui.InfiniteWay.IY_Hand
     )
 end
 
-coroutine.wrap(RNOB_fake_script)()
+task.spawn(RNOB_fake_script)
 return Module
