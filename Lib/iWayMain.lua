@@ -350,7 +350,7 @@ Converted["_logs"].Name = "logs"
 Converted["_logs"].Parent = Converted["_Select"]
 
 Converted["_Title"].Font = Enum.Font.SourceSans
-Converted["_Title"].Text = "Infinite Way [FE] - "..Name
+Converted["_Title"].Text = "Infinite Way [FE] - CUSTOM"
 Converted["_Title"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Converted["_Title"].TextSize = 14
 Converted["_Title"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
